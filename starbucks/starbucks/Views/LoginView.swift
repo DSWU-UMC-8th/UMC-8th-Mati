@@ -10,11 +10,13 @@ import SwiftUI
 struct LoginView: View {
     var body: some View {
         VStack {
+            Spacer().frame(height: 104)
             introGroup
-            Spacer().frame(height: 50)
+            Spacer()
             loginGroup
-            Spacer().frame(height: 50)
+            Spacer()
             ButtonGroup
+            Spacer().frame(height: 20)
         }
         .padding(.horizontal, 20)
     }

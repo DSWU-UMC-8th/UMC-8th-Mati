@@ -10,7 +10,7 @@ import SwiftUI
 struct SplashView: View {
     var body: some View {
         ZStack (alignment: .center) {
-            Color(.green01)
+            Color(red: 0, green: 0.66, blue: 0.38)
                 .ignoresSafeArea()
             Image(.logoStarbucks)
                 .resizable()

@@ -16,7 +16,6 @@
 			membershipExceptions = (
 				Info.plist,
 				Models/LoginModel.swift,
-				ViewModels/LoginViewModel.swift,
 			);
 			target = 2370B3AA2D8EF562008F9AAD /* starbucks */;
 		};
@@ -28,7 +27,6 @@
 			buildPhase = 2370B3A92D8EF562008F9AAD /* Resources */;
 			membershipExceptions = (
 				Models/LoginModel.swift,
-				ViewModels/LoginViewModel.swift,
 			);
 		};
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */

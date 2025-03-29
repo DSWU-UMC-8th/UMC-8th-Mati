@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct LoginView: View {
+    @StateObject var viewModel: LoginViewModel = .init()
+    @FocusState private var focusedField: Field?
+    
+    enum Field {
+        case id
+        case password
+    }
+    
     var body: some View {
         VStack {
             Spacer().frame(height: 104)
@@ -47,19 +55,25 @@ struct LoginView: View {
     private var loginGroup: some View {
         VStack (spacing: 47) {
             VStack {
-                Text("아이디")
+                TextField("아이디", text: $viewModel.id)
                     .font(.MainTextRegular13)
                     .foregroundStyle(.black01)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .textInputAutocapitalization(.never) // 첫글자 대문자 방지
+                    .focused($focusedField, equals: .id)
                 Divider()
+                    .background(focusedField == .id ? .green01 : .gray00)
             }
 
             VStack {
-                Text("비밀번호")
+                TextField("비밀번호", text: $viewModel.password)
                     .font(.MainTextRegular13)
                     .foregroundStyle(.black01)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .textInputAutocapitalization(.never) // 첫글자 대문자 방지
+                    .focused($focusedField, equals: .password)
                 Divider()
+                    .background(focusedField == .password ? .green01 : .gray00)
             }
             
             Button(action: {

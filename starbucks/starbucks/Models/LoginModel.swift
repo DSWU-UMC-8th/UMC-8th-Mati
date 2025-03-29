@@ -7,5 +7,5 @@
 
 struct LoginModel {
     var id: String
-    var pwd: String
+    var password: String
 }

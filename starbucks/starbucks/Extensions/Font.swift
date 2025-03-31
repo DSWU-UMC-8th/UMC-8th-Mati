@@ -65,8 +65,8 @@ extension Font {
         return .pretend(type: .semibold, size: 18)
     }
     
-    static var MainTextRegular16: Font {
-        return .pretend(type: .regular, size: 16)
+    static var MainTextSemiBold16: Font {
+        return .pretend(type: .semibold, size: 16)
     }
     
     static var MainTextSemiBold14: Font {
@@ -83,6 +83,10 @@ extension Font {
     
     static var MainTextRegular18: Font {
         return .pretend(type: .regular, size: 18)
+    }
+    
+    static var MainTextRegular16: Font {
+        return .pretend(type: .regular, size: 16)
     }
     
     static var MainTextRegular13: Font {

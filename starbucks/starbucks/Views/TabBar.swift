@@ -27,6 +27,14 @@ struct TabBar: View {
     }
 }
 
-#Preview {
-    TabBar()
+struct TabBar_Preview: PreviewProvider {
+    static var devices = ["iPhone 11", "iPhone 16 Pro"]
+    
+    static var previews: some View {
+        ForEach(devices, id: \.self) { device in
+            TabBar()
+                .previewDevice(PreviewDevice(rawValue: device))
+                .previewDisplayName(device)
+        }
+    }
 }

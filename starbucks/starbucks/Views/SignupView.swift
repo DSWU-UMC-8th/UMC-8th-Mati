@@ -75,6 +75,14 @@ struct SignupView: View {
     }
 }
 
-#Preview {
-    SignupView()
+struct SignupView_Preview: PreviewProvider {
+    static var devices = ["iPhone 11", "iPhone 16 Pro"]
+    
+    static var previews: some View {
+        ForEach(devices, id: \.self) { device in
+            SignupView()
+                .previewDevice(PreviewDevice(rawValue: device))
+                .previewDisplayName(device)
+        }
+    }
 }

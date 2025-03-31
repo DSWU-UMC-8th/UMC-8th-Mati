@@ -55,6 +55,14 @@ struct AdPopupView: View {
     }
 }
 
-#Preview {
-    AdPopupView()
+struct AdPopupView_Preview: PreviewProvider {
+    static var devices = ["iPhone 11", "iPhone 16 Pro"]
+    
+    static var previews: some View {
+        ForEach(devices, id: \.self) { device in
+            AdPopupView()
+                .previewDevice(PreviewDevice(rawValue: device))
+                .previewDisplayName(device)
+        }
+    }
 }

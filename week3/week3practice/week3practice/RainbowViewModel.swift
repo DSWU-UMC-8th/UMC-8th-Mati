@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+@Observable
+class RainbowViewModel {
+    var selectedRainbowModel: RainbowModel?
+}

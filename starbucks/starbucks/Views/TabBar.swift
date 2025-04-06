@@ -14,7 +14,9 @@ struct TabBar: View {
     
     var body: some View {
         TabView {
-            Tab("Home", image: "icon_home") {}
+            Tab("Home", image: "icon_home") {
+                HomeView()
+            }
             Tab("Pay", image: "icon_pay") {}
             Tab("Order", image: "icon_order") {}
             Tab("Shop", image: "icon_shop") {}

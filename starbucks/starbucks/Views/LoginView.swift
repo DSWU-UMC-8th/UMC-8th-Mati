@@ -10,6 +10,7 @@ import SwiftUI
 struct LoginView: View {
     @StateObject var viewModel: LoginViewModel = .init()
     @FocusState private var focusedField: Field?
+    @State private var path = NavigationPath()
     
     enum Field {
         case id
@@ -17,16 +18,18 @@ struct LoginView: View {
     }
     
     var body: some View {
-        VStack {
-            Spacer().frame(height: 104)
-            introGroup
-            Spacer()
-            loginGroup
-            Spacer()
-            ButtonGroup
-            Spacer().frame(height: 20)
+        NavigationStack {
+            VStack {
+                Spacer().frame(height: 104)
+                introGroup
+                Spacer()
+                loginGroup
+                Spacer()
+                ButtonGroup
+                Spacer().frame(height: 20)
+            }
+            .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 20)
     }
     
     private var introGroup: some View {
@@ -66,7 +69,7 @@ struct LoginView: View {
             }
 
             VStack {
-                TextField("비밀번호", text: $viewModel.password)
+                SecureField("비밀번호", text: $viewModel.password)
                     .font(.MainTextRegular13)
                     .foregroundStyle(.black01)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -95,10 +98,12 @@ struct LoginView: View {
     
     private var ButtonGroup: some View {
         VStack (spacing: 19) {
-            Text("이메일로 회원가입하기")
-                .font(.MainTextRegular12)
-                .foregroundStyle(Color(red: 0.47, green: 0.47, blue: 0.47))
-                .underline()
+            NavigationLink(destination: SignupView()) {
+                Text("이메일로 회원가입하기")
+                    .font(.MainTextRegular12)
+                    .foregroundStyle(Color(red: 0.47, green: 0.47, blue: 0.47))
+                    .underline()
+            }
             Image(.loginKakao)
             Image(.loginApple)
         }

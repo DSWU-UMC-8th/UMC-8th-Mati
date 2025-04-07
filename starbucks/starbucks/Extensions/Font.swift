@@ -101,6 +101,10 @@ extension Font {
         return .pretend(type: .regular, size: 9)
     }
     
+    static var MainTextLight24: Font {
+        return .pretend(type: .light, size: 24)
+    }
+    
     static var MainTextLight14: Font {
         return .pretend(type: .light, size: 14)
     }

@@ -8,36 +8,42 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var path = NavigationPath()
     @AppStorage("nickname") private var nickname: String?
     @State private var viewModel = HomeViewModel()
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                topBannerGroup
-                
-                Image(.imageHomeBearBanner)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(.horizontal, 10)
-                
-                recommendMenuGroup
-                
-                secondBannerGroup
-                
-                whatsNewBannerGroup
-                
-                thirdBannerGroup
-                
-                dessertGroup
-                
-                fourthBannerGroup
-                
-                Spacer()
-                    .frame(height: 80)
+        NavigationStack(path: $path) {
+            ScrollView {
+                VStack(spacing: 20) {
+                    topBannerGroup
+                    
+                    Image(.imageHomeBearBanner)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.horizontal, 10)
+                    
+                    recommendMenuGroup
+                    
+                    secondBannerGroup
+                    
+                    whatsNewBannerGroup
+                    
+                    thirdBannerGroup
+                    
+                    dessertGroup
+                    
+                    fourthBannerGroup
+                    
+                    Spacer()
+                        .frame(height: 80)
+                }
+            }
+            .ignoresSafeArea()
+            .navigationDestination(for: String.self) { coffee in
+                CoffeeDetailView(coffeeName: coffee)
             }
         }
-        .ignoresSafeArea()
     }
     
     private var topBannerGroup: some View {
@@ -58,14 +64,15 @@ struct HomeView: View {
                         Text("11★ until next Reward")
                             .font(.MainTextSemiBold16)
                             .foregroundStyle(.brown02)
+                            .frame(width: 200, alignment: .leading)
                         
                         ZStack(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 4)
-                                .frame(width: 240, height: 8)
+                                .frame(width: 210, height: 8)
                                 .foregroundStyle(Color(red: 0.86, green: 0.86, blue: 0.86))
                             
                             RoundedRectangle(cornerRadius: 4)
-                                .frame(width: 111, height: 8)
+                                .frame(width: 50, height: 8)
                                 .foregroundStyle(.brown01)
                         }
                     }
@@ -92,7 +99,7 @@ struct HomeView: View {
     private var recommendMenuGroup: some View {
         VStack(alignment: .leading, spacing: 25) {
             HStack {
-                Text("(설정 닉네임)")
+                Text(nickname?.isEmpty == false ? nickname! : "(설정 닉네임)")
                     .font(.MainTextBold24)
                     .foregroundStyle(.brown01)
                 +
@@ -105,7 +112,12 @@ struct HomeView: View {
             ScrollView(.horizontal) {
                 LazyHStack(spacing: 16) {
                     ForEach(viewModel.recommendMenu) { menu in
-                        CircleImageCard(image: menu.menuImage, title: menu.menuName)
+                        Button(action: {
+                            print("메뉴 이름: \(menu.menuName)")
+                            path.append(menu.menuName)
+                        }) {
+                            CircleImageCard(image: menu.menuImage, title: menu.menuName)
+                        }
                     }
                 }
                 .padding(.horizontal, 20)

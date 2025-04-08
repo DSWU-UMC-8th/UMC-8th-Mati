@@ -9,12 +9,12 @@ import Foundation
 
 class HomeViewModel {
     let recommendMenu: [RecommendMenuModel] = [
-        .init(menuImage: .init(.imageCoffee1), menuName: "에스프레소 콘파나"),
-        .init(menuImage: .init(.imageCoffee2), menuName: "에스프레소 마키아또"),
+        .init(menuImage: .init(.imageCoffee1), menuName: "에스프레소 콘 파나"),
+        .init(menuImage: .init(.imageCoffee2), menuName: "에스프레소 마끼아또"),
         .init(menuImage: .init(.imageCoffee3), menuName: "아이스 카페 아메리카노"),
         .init(menuImage: .init(.imageCoffee4), menuName: "카페 아메리카노"),
-        .init(menuImage: .init(.imageCoffee5), menuName: "아이스 카라멜 마키아또"),
-        .init(menuImage: .init(.imageCoffee6), menuName: "카라멜 마키아또"),
+        .init(menuImage: .init(.imageCoffee5), menuName: "아이스 카라멜 마끼아또"),
+        .init(menuImage: .init(.imageCoffee6), menuName: "카라멜 마끼아또"),
     ]
     
     let whatsNew: [WhatsNewModel] = [

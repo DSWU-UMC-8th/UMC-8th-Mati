@@ -45,6 +45,10 @@ extension Font {
         return .pretend(type: .extrabold, size: 24)
     }
     
+    static var MainTextBold15: Font {
+        return .pretend(type: .bold, size: 15)
+    }
+    
     static var MainTextBold20: Font {
         return .pretend(type: .bold, size: 20)
     }
@@ -99,6 +103,10 @@ extension Font {
     
     static var MainTextRegular09: Font {
         return .pretend(type: .regular, size: 9)
+    }
+    
+    static var MainTextLight24: Font {
+        return .pretend(type: .light, size: 24)
     }
     
     static var MainTextLight14: Font {

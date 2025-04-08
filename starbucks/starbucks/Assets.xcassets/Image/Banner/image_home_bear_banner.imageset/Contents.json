@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "image_home_bear_banner.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

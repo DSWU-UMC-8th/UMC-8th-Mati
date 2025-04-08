@@ -9,7 +9,8 @@ import SwiftUI
 
 struct OtherView: View {
     @State private var viewModel = OtherViewModel()
-    @AppStorage("apNickname") private var nickname: String = "(작성한 닉네임)"
+    @AppStorage("nickname") private var nickname: String?
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = true
     
     var body: some View {
         VStack {
@@ -45,7 +46,7 @@ struct OtherView: View {
                 Spacer()
                 
                 Button {
-                    print("logout")
+                    isLoggedIn = false
                 } label: {
                     Image(.iconLogout)
                 }
@@ -59,7 +60,7 @@ struct OtherView: View {
     private var userGroup: some View {
         VStack(spacing: 24) {
             VStack(spacing: 5) {
-                Text(nickname)
+                Text(nickname?.isEmpty == false ? nickname! : "(설정 닉네임)")
                     .foregroundStyle(.green01)
                 +
                 Text(" 님")

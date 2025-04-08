@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct starbucksApp: App {
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
+    
     var body: some Scene {
         WindowGroup {
-            TabBar()
+            if isLoggedIn {
+                TabBar()
+            } else {
+                LoginView()
+            }
         }
     }
 }

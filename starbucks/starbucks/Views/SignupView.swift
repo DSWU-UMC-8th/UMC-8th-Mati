@@ -10,6 +10,7 @@ import SwiftUI
 struct SignupView: View {
     @State var viewModel: SignupViewModel = .init()
     @FocusState private var focusedField: Field?
+    @Environment(\.dismiss) var dismiss
     
     enum Field {
         case nickname
@@ -18,20 +19,41 @@ struct SignupView: View {
     }
     
     var body: some View {
-        VStack {
-            Spacer()
-                .frame(height: 210)
-            
-            textFieldGroup
-            
-            Spacer()
-            
-            createButton
-            
-            Spacer()
-                .frame(height: 72)
+        NavigationStack {
+            VStack {
+                Spacer()
+                    .frame(height: 210)
+                
+                textFieldGroup
+                
+                Spacer()
+                
+                createButton
+                
+                Spacer()
+                    .frame(height: 72)
+            }
+            .modifier(
+                CustomNavigationBar(
+                    leftView: {
+                        Button(action: {
+                            dismiss()
+                        }, label: {
+                            Image(.iconBack)
+                        })
+                    },
+                    centerView: {
+                        Text("가입하기")
+                            .font(.MainTextMedium16)
+                            .foregroundStyle(.black)
+                    },
+                    rightView: {
+                        Spacer()
+                    }
+                )
+            )
         }
-        .ignoresSafeArea()
+        .navigationBarBackButtonHidden(true)
     }
     
     private var textFieldGroup : some View {
@@ -47,10 +69,17 @@ struct SignupView: View {
     
     private func makeTextField(focus: Field, string: String, text: Binding<String>) -> some View {
         VStack(spacing: 9) {
-            TextField(string, text: text)
-                .font(.MainTextRegular18)
-                .textInputAutocapitalization(.never)
-                .focused($focusedField, equals: focus)
+            if focus == .password {
+                SecureField(string, text: text)
+                    .font(.MainTextRegular18)
+                    .textInputAutocapitalization(.never)
+                    .focused($focusedField, equals: focus)
+            } else {
+                TextField(string, text: text)
+                    .font(.MainTextRegular18)
+                    .textInputAutocapitalization(.never)
+                    .focused($focusedField, equals: focus)
+            }
             Divider()
                 .background(focusedField == focus ? .green01 : .gray00)
         }
@@ -58,7 +87,12 @@ struct SignupView: View {
     
     private var createButton: some View {
         Button(action: {
-            viewModel.saveUserData()
+            if viewModel.user.nickname.count > 0 &&
+               viewModel.user.email.count > 0 &&
+               viewModel.user.password.count > 0 {
+                viewModel.saveUserData()
+                dismiss()
+            }
         }, label: {
             ZStack {
                 Rectangle()
@@ -72,17 +106,5 @@ struct SignupView: View {
             }
             .padding(.horizontal, 19)
         })
-    }
-}
-
-struct SignupView_Preview: PreviewProvider {
-    static var devices = ["iPhone 11", "iPhone 16 Pro"]
-    
-    static var previews: some View {
-        ForEach(devices, id: \.self) { device in
-            SignupView()
-                .previewDevice(PreviewDevice(rawValue: device))
-                .previewDisplayName(device)
-        }
     }
 }

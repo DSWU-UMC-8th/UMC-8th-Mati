@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "image_americano_hot.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

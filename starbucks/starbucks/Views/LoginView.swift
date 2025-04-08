@@ -11,6 +11,11 @@ struct LoginView: View {
     @StateObject var viewModel: LoginViewModel = .init()
     @FocusState private var focusedField: Field?
     @State private var path = NavigationPath()
+    @State private var isLoginSuccess = false
+    
+    @AppStorage("email") var savedEmail: String = ""
+    @AppStorage("password") var savedPassword: String = ""
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     
     enum Field {
         case id
@@ -18,17 +23,23 @@ struct LoginView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Spacer().frame(height: 104)
-                introGroup
-                Spacer()
-                loginGroup
-                Spacer()
-                ButtonGroup
-                Spacer().frame(height: 20)
+        Group {
+            if isLoginSuccess {
+                TabBar()
+            } else {
+                NavigationStack {
+                    VStack {
+                        Spacer().frame(height: 104)
+                        introGroup
+                        Spacer()
+                        loginGroup
+                        Spacer()
+                        ButtonGroup
+                        Spacer().frame(height: 20)
+                    }
+                    .padding(.horizontal, 20)
+                }
             }
-            .padding(.horizontal, 20)
         }
     }
     
@@ -80,7 +91,11 @@ struct LoginView: View {
             }
             
             Button(action: {
-                print("Login Button Tapped")
+                if viewModel.login(email: savedEmail, password: savedPassword) {
+                    isLoggedIn = true
+                } else {
+                    print("로그인 실패")
+                }
             }, label: {
                 ZStack {
                     Rectangle()

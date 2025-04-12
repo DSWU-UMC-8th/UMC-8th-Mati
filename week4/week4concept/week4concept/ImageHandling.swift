@@ -9,10 +9,7 @@ import Foundation
 import SwiftUI
 
 protocol ImageHandling: AnyObject {
-    func addImage(_ images: UIImage)
-    func removeImage(at index: Int)
+    func addImage(_ image: UIImage)
     func getImages() -> [UIImage]
-    
-    var isImagePickerPresented: Bool { get set }
-    var images: [UIImage] { get set }
+    var recognizedText: String { get set }
 }

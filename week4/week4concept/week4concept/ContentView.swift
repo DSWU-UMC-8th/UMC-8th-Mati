@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showImagePicker = false
-    @State private var selectedImages: [UIImage] = []
+    @Bindable var viewModel: ContentViewModel = .init()
     
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(selectedImages, id: \.self) { image in
+                    ForEach(viewModel.getImages(), id: \.self) { image in
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
@@ -25,10 +24,10 @@ struct ContentView: View {
             }
             
             Button("앨범에서 사진 선택") {
-                showImagePicker = true
+                viewModel.isImagePickerPresented.toggle()
             }
-            .sheet(isPresented: $showImagePicker) {
-                ImagePicker(images: $selectedImages, selectedLimit: 5)
+            .sheet(isPresented: $viewModel.isImagePickerPresented) {
+                ImagePicker(imageHandler: viewModel, selectedLimit: 5)
             }
         }
     }

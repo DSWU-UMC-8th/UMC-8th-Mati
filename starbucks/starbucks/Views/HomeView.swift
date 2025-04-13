@@ -11,6 +11,7 @@ struct HomeView: View {
     @State private var path = NavigationPath()
     @AppStorage("nickname") private var nickname: String?
     @State private var viewModel = HomeViewModel()
+    @State private var popupPresented: Bool = true
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -42,6 +43,9 @@ struct HomeView: View {
             .ignoresSafeArea()
             .navigationDestination(for: String.self) { coffee in
                 CoffeeDetailView(coffeeName: coffee)
+            }
+            .fullScreenCover(isPresented: $popupPresented) {
+                AdPopupView()
             }
         }
     }

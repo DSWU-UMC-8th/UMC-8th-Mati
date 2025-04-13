@@ -116,7 +116,7 @@ struct HomeView: View {
                             print("메뉴 이름: \(menu.menuName)")
                             path.append(menu.menuName)
                         }) {
-                            CircleImageCard(image: menu.menuImage, title: menu.menuName)
+                            CircleImageCard(image: menu.menuImage, title: menu.menuName, size: 130, textSize: 14)
                         }
                     }
                 }
@@ -186,7 +186,7 @@ struct HomeView: View {
             ScrollView(.horizontal) {
                 LazyHStack(spacing: 16) {
                     ForEach(viewModel.dessertMenu) { menu in
-                        CircleImageCard(image: menu.menuImage, title: menu.menuName)
+                        CircleImageCard(image: menu.menuImage, title: menu.menuName, size: 130, textSize: 14)
                     }
                 }
                 .padding(.horizontal, 20)

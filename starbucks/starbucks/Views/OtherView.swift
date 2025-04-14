@@ -8,36 +8,43 @@
 import SwiftUI
 
 struct OtherView: View {
+    @State private var path = NavigationPath()
     @State private var viewModel = OtherViewModel()
     @AppStorage("nickname") private var nickname: String?
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = true
     
     var body: some View {
-        VStack {
-            topGroup
-            
-            Spacer().frame(height: 41)
-            
-            userGroup
-            
-            Spacer()
-            
-            payGroup
-            
-            Spacer()
-            
-            customerGroup
-            
-            Spacer().frame(height: 41)
+        NavigationStack(path: $path) {
+            ZStack {
+                Color.white01
+                
+                VStack {
+                    topGroup
+                    
+                    Spacer().frame(height: 41)
+                    
+                    userGroup
+                    
+                    Spacer()
+                    
+                    payGroup
+                    
+                    Spacer()
+                    
+                    customerGroup
+                    
+                    Spacer()
+                }
+            }
+            .navigationDestination(for: String.self) { value in
+                ReceiptView()
+                    .toolbar(.hidden)
+            }
         }
-        .background(.white01)
-        .ignoresSafeArea()
     }
     
     private var topGroup: some View {
         VStack {
-            Spacer()
-            
             HStack {
                 Text("Other")
                     .font(.MainTextBold24)
@@ -71,7 +78,7 @@ struct OtherView: View {
             
             HStack(spacing: 10.5) {
                 ForEach(viewModel.otherUserModel, id: \.title) { item in
-                    userButtonView(userIcon: item)
+                    userButtonView(userIcon: item, path: $path)
                 }
             }
         }
@@ -135,30 +142,38 @@ struct OtherView: View {
     
 }
 
+// MARK: - Custom Button
 struct userButtonView: View {
+    @Binding var path: NavigationPath
     let userIcon: OtherModel
     
-    init(userIcon: OtherModel) {
+    init(userIcon: OtherModel, path: Binding<NavigationPath>) {
         self.userIcon = userIcon
+        self._path = path
     }
     
     var body: some View {
-        Button {
-            print(userIcon.title)
-        } label: {
-            VStack(spacing: 4) {
-                userIcon.icon
-                
-                Text(userIcon.title)
-                    .font(.MainTextSemiBold16)
-                    .foregroundStyle(.black03)
-                    .frame(width: 102)
+        VStack {
+            Button {
+                print(userIcon.title)
+                if userIcon.title == "전자영수증" {
+                    path.append("Receipt")
+                }
+            } label: {
+                VStack(spacing: 4) {
+                    userIcon.icon
+                    
+                    Text(userIcon.title)
+                        .font(.MainTextSemiBold16)
+                        .foregroundStyle(.black03)
+                        .frame(width: 102)
+                }
+                .padding(.vertical, 19)
+                .background(.white)
+                .frame(width: 102, height: 108)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .shadow(color: .black.opacity(0.1), radius: 2.5)
             }
-            .padding(.vertical, 19)
-            .background(.white)
-            .frame(width: 102, height: 108)
-            .clipShape(RoundedRectangle(cornerRadius: 15))
-            .shadow(color: .black.opacity(0.1), radius: 2.5)
         }
     }
 }

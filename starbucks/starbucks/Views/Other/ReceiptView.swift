@@ -142,17 +142,30 @@ struct ReceiptView: View {
     }
     
     private var itemGroup: some View {
-        VStack(spacing: 15) {
+        List {
             ForEach(receipts, id: \.id) { receipt in
                 ReceiptItemView(receipt: receipt) {
                     if let data = receipt.image {
-                        print("✅ 이미지 있음: \(data.count) bytes")
                         selectedImage = UIImage(data: data) ?? UIImage()
                         showReceiptImage = true
                     }
                 }
+                .lineSpacing(15)
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
             }
+            .onDelete(perform: deleteReceipts)
         }
+        .listStyle(.plain)
+    }
+    
+    private func deleteReceipts(at offsets: IndexSet) {
+        for index in offsets {
+            let receipt = receipts[index]
+            modelContext.delete(receipt)
+        }
+
+        try? modelContext.save()
     }
 }
 

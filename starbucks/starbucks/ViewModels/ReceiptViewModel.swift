@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 import Vision
 
 @Observable
 class ReceiptViewModel {
-    var receipts: [ReceiptModel] = []
+    var modelContext: ModelContext!
     var lastImage: UIImage = UIImage()
     
     func startOCR(image: UIImage) {
@@ -29,7 +30,8 @@ class ReceiptViewModel {
             let parsed = self.parseWithoutRegex(from: fullText)
             
             DispatchQueue.main.async {
-                self.receipts.append(parsed)
+                self.modelContext.insert(parsed)
+                try? self.modelContext.save()
             }
         }
         

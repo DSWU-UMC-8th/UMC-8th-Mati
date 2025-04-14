@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 import PhotosUI
 
 struct ReceiptView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \ReceiptModel.date, order: .reverse) private var receipts: [ReceiptModel]
     @Environment(\.dismiss) var dismiss
     
     @State private var selectedItem: [PhotosPickerItem] = []
@@ -36,7 +39,7 @@ struct ReceiptView: View {
                         .font(.MainTextRegular18)
                         .foregroundStyle(.black)
                     +
-                    Text("\(viewModel.receipts.count)건")
+                    Text("\(receipts.count)건")
                         .font(.MainTextSemiBold18)
                         .foregroundStyle(.brown01)
                     
@@ -46,7 +49,7 @@ struct ReceiptView: View {
                         .font(.MainTextRegular18)
                         .foregroundStyle(.black)
                     +
-                    Text("\(viewModel.receipts.map(\.total).reduce(0, +))")
+                    Text("\(receipts.map(\.total).reduce(0, +))")
                         .font(.MainTextSemiBold18)
                         .foregroundStyle(.brown01)
                 }
@@ -106,6 +109,9 @@ struct ReceiptView: View {
                 }
             }
         }
+        .onAppear {
+            viewModel.modelContext = modelContext
+        }
     }
     
     private var topGroup: some View {
@@ -137,7 +143,7 @@ struct ReceiptView: View {
     
     private var itemGroup: some View {
         VStack(spacing: 15) {
-            ForEach(viewModel.receipts, id: \.id) { receipt in
+            ForEach(receipts, id: \.id) { receipt in
                 ReceiptItemView(receipt: receipt) {
                     if let data = receipt.image {
                         print("✅ 이미지 있음: \(data.count) bytes")

@@ -19,5 +19,6 @@ struct starbucksApp: App {
                 LoginView()
             }
         }
+        .modelContainer(for: ReceiptModel.self)
     }
 }

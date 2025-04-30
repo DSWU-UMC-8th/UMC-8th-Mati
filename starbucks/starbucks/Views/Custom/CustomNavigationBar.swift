@@ -45,6 +45,5 @@ struct CustomNavigationBar<L, C, R>: ViewModifier where L: View, C: View, R: Vie
             
             Spacer()
         }
-        .navigationBarHidden(true)
     }
 }

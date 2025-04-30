@@ -11,6 +11,7 @@ struct HomeView: View {
     @State private var path = NavigationPath()
     @AppStorage("nickname") private var nickname: String?
     @State private var viewModel = HomeViewModel()
+    @State private var popupPresented: Bool = true
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -42,6 +43,9 @@ struct HomeView: View {
             .ignoresSafeArea()
             .navigationDestination(for: String.self) { coffee in
                 CoffeeDetailView(coffeeName: coffee)
+            }
+            .fullScreenCover(isPresented: $popupPresented) {
+                AdPopupView()
             }
         }
     }
@@ -116,7 +120,7 @@ struct HomeView: View {
                             print("메뉴 이름: \(menu.menuName)")
                             path.append(menu.menuName)
                         }) {
-                            CircleImageCard(image: menu.menuImage, title: menu.menuName)
+                            CircleImageCard(image: menu.menuImage, title: menu.menuName, size: 130, textSize: 14)
                         }
                     }
                 }
@@ -186,7 +190,7 @@ struct HomeView: View {
             ScrollView(.horizontal) {
                 LazyHStack(spacing: 16) {
                     ForEach(viewModel.dessertMenu) { menu in
-                        CircleImageCard(image: menu.menuImage, title: menu.menuName)
+                        CircleImageCard(image: menu.menuImage, title: menu.menuName, size: 130, textSize: 14)
                     }
                 }
                 .padding(.horizontal, 20)

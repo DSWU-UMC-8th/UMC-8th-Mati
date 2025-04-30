@@ -19,7 +19,9 @@ struct TabBar: View {
             }
             Tab("Pay", image: "icon_pay") {}
             Tab("Order", image: "icon_order") {}
-            Tab("Shop", image: "icon_shop") {}
+            Tab("Shop", image: "icon_shop") {
+                ShopView()
+            }
             Tab("Other", image: "icon_other") {
                 OtherView()
             }

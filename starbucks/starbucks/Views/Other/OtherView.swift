@@ -37,8 +37,16 @@ struct OtherView: View {
                 }
             }
             .navigationDestination(for: String.self) { value in
-                ReceiptView()
-                    .toolbar(.hidden)
+                switch value {
+                case "Receipt":
+                    ReceiptView()
+                        .toolbar(.hidden)
+                case "OtherStoreInfo":
+                    OtherStoreInfoView()
+                        .toolbar(.hidden)
+                default:
+                    EmptyView()
+                }
             }
         }
     }
@@ -93,16 +101,16 @@ struct OtherView: View {
             Spacer().frame(height: 8)
             
             HStack {
-                menuButtonView(menuIcon: viewModel.otherPayModel[0])
+                menuButtonView(menuIcon: viewModel.otherPayModel[0], path: $path)
                 Spacer()
-                menuButtonView(menuIcon: viewModel.otherPayModel[1])
+                menuButtonView(menuIcon: viewModel.otherPayModel[1], path: $path)
             }
             .padding(.vertical, 16)
 
             HStack {
-                menuButtonView(menuIcon: viewModel.otherPayModel[2])
+                menuButtonView(menuIcon: viewModel.otherPayModel[2], path: $path)
                 Spacer()
-                menuButtonView(menuIcon: viewModel.otherPayModel[3])
+                menuButtonView(menuIcon: viewModel.otherPayModel[3], path: $path)
             }
             .padding(.vertical, 16)
             
@@ -121,20 +129,20 @@ struct OtherView: View {
             Spacer().frame(height: 8)
             
             HStack {
-                menuButtonView(menuIcon: viewModel.otherCutomerModel[0])
+                menuButtonView(menuIcon: viewModel.otherCutomerModel[0], path: $path)
                 Spacer()
-                menuButtonView(menuIcon: viewModel.otherCutomerModel[1])
+                menuButtonView(menuIcon: viewModel.otherCutomerModel[1], path: $path)
             }
             .padding(.vertical, 16)
             
             HStack {
-                menuButtonView(menuIcon: viewModel.otherCutomerModel[2])
+                menuButtonView(menuIcon: viewModel.otherCutomerModel[2], path: $path)
                 Spacer()
-                menuButtonView(menuIcon: viewModel.otherCutomerModel[3])
+                menuButtonView(menuIcon: viewModel.otherCutomerModel[3], path: $path)
             }
             .padding(.vertical, 16)
             
-            menuButtonView(menuIcon: viewModel.otherCutomerModel[4])
+            menuButtonView(menuIcon: viewModel.otherCutomerModel[4], path: $path)
                 .padding(.vertical, 16)
         }
         .padding(.horizontal, 10)
@@ -179,15 +187,20 @@ struct userButtonView: View {
 }
 
 struct menuButtonView: View {
+    @Binding var path: NavigationPath
     let menuIcon: OtherModel
     
-    init(menuIcon: OtherModel) {
+    init(menuIcon: OtherModel, path: Binding<NavigationPath>) {
         self.menuIcon = menuIcon
+        self._path = path
     }
     
     var body: some View {
         Button(action: {
             print(menuIcon.title)
+            if menuIcon.title == "매장 정보" {
+                path.append("OtherStoreInfo")
+            }
         }) {
             HStack(spacing: 4) {
                 menuIcon.icon
